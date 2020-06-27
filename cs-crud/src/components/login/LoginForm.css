@@ -1,0 +1,58 @@
+.form-side {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 40px;
+}
+
+div.MuiTextField-root {
+  width: 100%;
+  margin-top: 10px;
+}
+/* Change hint color */
+label.MuiFormLabel-root {
+  color: var(--main-color);
+}
+label.MuiFormLabel-root.Mui-focused {
+  color: var(--dark-main-color);
+}
+
+/* Change icon a text color */
+div.MuiInputBase-root {
+  color: var(--main-color);
+  transition: 150ms all ease-in;
+}
+label.MuiFormLabel-root.Mui-focused + div.MuiInputBase-root {
+  color: var(--dark-main-color);
+}
+
+/* Change bottom line color */
+div.MuiInput-underline::before {
+  border-bottom-color: var(--main-color);
+}
+div.MuiInput-underline:hover:not(.Mui-disabled)::before {
+  border-bottom-color: var(--light-main-color);
+}
+
+/* Change focused bottom line color */
+div.MuiInput-underline::after {
+  border-bottom-color: var(--dark-main-color);
+}
+
+h4.MuiTypography-root{
+    color: var(--main-color);
+    font-weight: 500;
+}
+
+a.btn-login {
+  margin-top: 16px;
+  border-radius: 40px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0)
+    linear-gradient(to right, rgb(0, 0, 70), rgb(28, 181, 224)) repeat scroll 0%
+    0%;
+  color: white;
+}

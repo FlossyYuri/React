@@ -1,0 +1,20 @@
+.client-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.client-view header {
+  background-color: var(--main-color);
+}
+.client-view header div.MuiToolbar-root,
+div.user-profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.client-view div.tab {
+  flex: 1;
+}
+.client-view .btn-close{
+    color: #ffebee;
+}

@@ -1,0 +1,64 @@
+.register-client {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.register-client h5.screen-title {
+  margin: 16px;
+  font-weight: 500;
+  color: var(--dark-main-color);
+}
+
+.register-client form {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.register-client form h6.MuiTypography-root {
+  margin-bottom: 0;
+  color: var(--main-color);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.register-client form .flex-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.register-client form p.MuiFormHelperText-root {
+  color: var(--danger);
+}
+
+.register-client form .btn-aux {
+  background-color: transparent;
+  box-shadow: none;
+  margin-left: 16px;
+}
+.register-client form .btn-add span.MuiButton-startIcon {
+  color: var(--main-color);
+}
+.register-client form .btn-rem span.MuiButton-startIcon {
+  color: var(--danger);
+}
+.actions-bar {
+  background-color: var(--light-main-color);
+  padding: 16px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.actions-bar button.btn-form {
+  width: 35%;
+  color: white;
+  background-color: var(--dark-main-color);
+}
+
+.actions-bar button.clear {
+  background-color: var(--danger);
+}
+
+div.MuiTextField-root {
+  margin-top: 0px;
+}

@@ -1,0 +1,29 @@
+.side-bar {
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: var(--dark-main-color);
+  color: white;
+}
+
+.side-bar h5 {
+  text-align: center;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.side-bar div.tabsGroup {
+  width: 100%;
+}
+.side-bar span.PrivateTabIndicator-colorSecondary-3 {
+  background-color: white;
+  width: 3px;
+  border-radius: 3px;
+}
+.side-bar div.tabsGroup button.MuiTab-root {
+  width: 100%;
+  max-width: 100%;
+}

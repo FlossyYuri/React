@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+:root {
+  --main-color: #59698d;
+  --dark-main-color: #1c2a48;
+  --light-main-color: #d0d6e2;
+  --danger: #ff1744;
+}
+
+* {
+  box-sizing: border-box;
+  font-size: 18px;
+  font-family: Quicksand !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0)
+    linear-gradient(to right, rgb(195, 55, 100), rgb(29, 38, 113)) repeat scroll
+    0% 0%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

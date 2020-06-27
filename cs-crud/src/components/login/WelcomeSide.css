@@ -1,0 +1,20 @@
+.welcome-side {
+  width: 300px;
+  background: rgba(0, 0, 0, 0)
+    linear-gradient(to right, rgb(0, 0, 70), rgb(28, 181, 224)) repeat scroll 0%
+    0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  color: white;
+}
+
+.welcome-side div.MuiAvatar-root {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  color: var(--main-color);
+  margin-top: 16px;
+  margin-bottom: 16px;
+}

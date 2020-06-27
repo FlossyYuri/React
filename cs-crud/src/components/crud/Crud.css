@@ -1,0 +1,9 @@
+.crud-window {
+  width: 90vw;
+  height: 85vh;
+  background-color: white;
+  display: flex;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)
+}
