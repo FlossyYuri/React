@@ -1,0 +1,7 @@
+div.view-client {
+  flex: 1;
+  padding: 16px;
+}
+.tab {
+  overflow-y: scroll;
+}

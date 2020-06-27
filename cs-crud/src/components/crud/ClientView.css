@@ -7,7 +7,7 @@
   background-color: var(--main-color);
 }
 .client-view header div.MuiToolbar-root,
-div.user-profile {
+div.client-profile {
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -5,7 +5,7 @@ import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 import SaveIcon from "@material-ui/icons/Save";
 import "./RegisterClient.css";
 
-const user = {
+const client = {
   name: "",
   bi: "",
   address: {
@@ -20,8 +20,8 @@ const user = {
 
 // i dint use the spread operator to clone to avoid conflicts of different objects pointing to the same references
 const initState = {
-  user: JSON.parse(JSON.stringify(user)),
-  helper: JSON.parse(JSON.stringify(user)),
+  client: JSON.parse(JSON.stringify(client)),
+  helper: JSON.parse(JSON.stringify(client)),
   data: {},
 };
 
@@ -41,94 +41,94 @@ export default class ClientView extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   addEmail() {
-    if (this.state.user.emails.length < 4) {
-      const user = { ...this.state.user };
-      user.emails.push("");
-      this.setState({ user });
+    if (this.state.client.emails.length < 4) {
+      const client = { ...this.state.client };
+      client.emails.push("");
+      this.setState({ client });
     }
   }
   removeEmail() {
-    if (this.state.user.emails.length > 1) {
-      const user = { ...this.state.user };
-      user.emails.pop();
-      this.setState({ user });
+    if (this.state.client.emails.length > 1) {
+      const client = { ...this.state.client };
+      client.emails.pop();
+      this.setState({ client });
     }
   }
   addPhone() {
-    if (this.state.user.phones.length < 4) {
-      const user = { ...this.state.user };
-      user.phones.push("");
-      this.setState({ user });
+    if (this.state.client.phones.length < 4) {
+      const client = { ...this.state.client };
+      client.phones.push("");
+      this.setState({ client });
     }
   }
   removePhone() {
-    if (this.state.user.phones.length > 1) {
-      const user = { ...this.state.user };
-      user.phones.pop();
-      this.setState({ user });
+    if (this.state.client.phones.length > 1) {
+      const client = { ...this.state.client };
+      client.phones.pop();
+      this.setState({ client });
     }
   }
   updateField(event) {
-    const user = { ...this.state.user };
-    user[event.target.name] = event.target.value;
-    this.setState({ user });
+    const client = { ...this.state.client };
+    client[event.target.name] = event.target.value;
+    this.setState({ client });
   }
   updateAddress(event) {
-    const user = { ...this.state.user };
-    user.address[event.target.name] = event.target.value;
-    this.setState({ user });
+    const client = { ...this.state.client };
+    client.address[event.target.name] = event.target.value;
+    this.setState({ client });
   }
   updateArray(event) {
-    const user = { ...this.state.user };
-    user[event.target.name][event.target.attributes.index.value] =
+    const client = { ...this.state.client };
+    client[event.target.name][event.target.attributes.index.value] =
       event.target.value;
-    this.setState({ user });
+    this.setState({ client });
   }
   clear() {
     this.setState(JSON.parse(JSON.stringify(initState)));
   }
   validate() {
     let hasError = false;
-    const helper = JSON.parse(JSON.stringify(user));
+    const helper = JSON.parse(JSON.stringify(client));
 
     if (
-      this.state.user.name.length < 3 ||
-      this.state.user.name.length > 100 ||
+      this.state.client.name.length < 3 ||
+      this.state.client.name.length > 100 ||
       !/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ0-9 ]+$/.test(
-        this.state.user.name
+        this.state.client.name
       )
     ) {
       hasError = true;
       helper.name = "Deve conter de 3 a 100 caracteres";
     }
 
-    if (this.state.user.bi.length !== 13) {
+    if (this.state.client.bi.length !== 13) {
       hasError = true;
       helper.bi = "Deve conter 13 caracteres";
     }
-    if (!this.state.user.address.zipCode) {
+    if (!this.state.client.address.zipCode) {
       hasError = true;
       helper.address.zipCode = "Campo obrigatório";
     }
-    if (!this.state.user.address.publicPlace) {
+    if (!this.state.client.address.publicPlace) {
       hasError = true;
       helper.address.publicPlace = "Campo obrigatório";
     }
-    if (!this.state.user.address.neighborHood) {
+    if (!this.state.client.address.neighborHood) {
       hasError = true;
       helper.address.neighborHood = "Campo obrigatório";
     }
-    if (!this.state.user.address.city) {
+    if (!this.state.client.address.city) {
       hasError = true;
       helper.address.city = "Campo obrigatório";
     }
-    this.state.user.phones.forEach((phone, index) => {
+    this.state.client.phones.forEach((phone, index) => {
       if (phone.length < 9) {
         hasError = true;
         helper.phones[index] = "Introduza corretamente o telefone";
       }
     });
-    this.state.user.emails.forEach((email, index) => {
+    this.state.client.emails.forEach((email, index) => {
       if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         hasError = true;
         helper.emails[index] = "Email invalido";
@@ -141,7 +141,7 @@ export default class ClientView extends Component {
   onSubmit() {
     const err = this.validate();
     if (!err) {
-      const data = JSON.parse(JSON.stringify(this.state.user));
+      const data = JSON.parse(JSON.stringify(this.state.client));
       this.setState({ data });
     }
   }
@@ -155,7 +155,7 @@ export default class ClientView extends Component {
           <Grid container spacing={1}>
             <Grid item sm={12} md={6}>
               <TextField
-                value={this.state.user.name}
+                value={this.state.client.name}
                 onChange={this.updateField}
                 name="name"
                 label="Nome"
@@ -164,7 +164,7 @@ export default class ClientView extends Component {
             </Grid>
             <Grid item sm={12} md={6}>
               <TextField
-                value={this.state.user.bi}
+                value={this.state.client.bi}
                 onChange={this.updateField}
                 name="bi"
                 label="BI"
@@ -180,7 +180,7 @@ export default class ClientView extends Component {
                 </Grid>
                 <Grid item sm={12} md={4} lg={3}>
                   <TextField
-                    value={this.state.user.address.zipCode}
+                    value={this.state.client.address.zipCode}
                     onChange={this.updateAddress}
                     name="zipCode"
                     placeholder="ZIPCODE"
@@ -189,7 +189,7 @@ export default class ClientView extends Component {
                 </Grid>
                 <Grid item sm={12} md={4} lg={3}>
                   <TextField
-                    value={this.state.user.address.publicPlace}
+                    value={this.state.client.address.publicPlace}
                     onChange={this.updateAddress}
                     name="publicPlace"
                     placeholder="Logradouro"
@@ -198,7 +198,7 @@ export default class ClientView extends Component {
                 </Grid>
                 <Grid item sm={12} md={4} lg={3}>
                   <TextField
-                    value={this.state.user.address.neighborHood}
+                    value={this.state.client.address.neighborHood}
                     onChange={this.updateAddress}
                     name="neighborHood"
                     placeholder="Bairro"
@@ -207,7 +207,7 @@ export default class ClientView extends Component {
                 </Grid>
                 <Grid item sm={12} md={4} lg={3}>
                   <TextField
-                    value={this.state.user.address.city}
+                    value={this.state.client.address.city}
                     onChange={this.updateAddress}
                     name="city"
                     placeholder="Cidade"
@@ -221,7 +221,7 @@ export default class ClientView extends Component {
                 <Grid item xs={12} className="flex-row">
                   <Typography variant="subtitle1" gutterBottom>
                     Telefones{" "}
-                    <span>{`(${this.state.user.phones.length})`}</span>
+                    <span>{`(${this.state.client.phones.length})`}</span>
                   </Typography>
 
                   <Button
@@ -243,7 +243,7 @@ export default class ClientView extends Component {
                     REM
                   </Button>
                 </Grid>
-                {this.state.user.phones.map((phone, index) => (
+                {this.state.client.phones.map((phone, index) => (
                   <Grid key={index + "Phone"} item sm={12} md={4} lg={3}>
                     <TextField
                       value={phone}
@@ -262,7 +262,7 @@ export default class ClientView extends Component {
               <Grid container spacing={1}>
                 <Grid item xs={12} className="flex-row">
                   <Typography variant="subtitle1" gutterBottom>
-                    Emails <span>{`(${this.state.user.emails.length})`}</span>
+                    Emails <span>{`(${this.state.client.emails.length})`}</span>
                   </Typography>
 
                   <Button
@@ -284,7 +284,7 @@ export default class ClientView extends Component {
                     REM
                   </Button>
                 </Grid>
-                {this.state.user.emails.map((email, index) => (
+                {this.state.client.emails.map((email, index) => (
                   <Grid key={index} item sm={12} md={4} lg={3}>
                     <TextField
                       value={email}

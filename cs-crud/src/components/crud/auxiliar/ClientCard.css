@@ -1,0 +1,80 @@
+div.client-card {
+  box-shadow: var(--card-1);
+  padding: 24px;
+  align-items: center;
+}
+div.client-card h6 {
+  margin: 8px 0;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--main-color);
+  opacity: 0.8;
+}
+.client-card .profile-header,
+.client-card .address-data {
+  display: flex;
+  flex-wrap: wrap;
+}
+div.client-card,
+.client-card .profile-body,
+.client-card .emails,
+.client-card .phones,
+.client-card .address-fields,
+.client-card .address-info {
+  display: flex;
+  flex-direction: column;
+}
+
+div.client-card .profile-header .client-avatar {
+  margin-right: 20px;
+  padding: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--main-color);
+  box-shadow: var(--card-1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.client-card div.header-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.client-card .profile-header .clientname span {
+  color: var(--dark-main-color);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.client-card .profile-header .bi span {
+  color: var(--main-color);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+div.client-card .profile-body span {
+  font-size: 1rem;
+  color: var(--dark-main-color);
+  margin-right: 16px;
+}
+div.client-card .address-fields span {
+  color: var(--dark-main-color);
+  margin-right: 40px;
+  opacity: 0.6;
+}
+.client-card .client-actions {
+  display: flex;
+  align-items: center;
+}
+.client-card .client-actions .del span.MuiIconButton-label {
+  color: var(--danger);
+}
+.client-card .client-actions .edit span.MuiIconButton-label {
+  color: var(--main-color);
+}

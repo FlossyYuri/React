@@ -43,9 +43,9 @@ export default function ClientView(props) {
     <div className="client-view">
       <AppBar position="static">
         <Toolbar>
-          <div className="user-profile">
+          <div className="client-profile">
             <IconButton
-              aria-label="account of current user"
+              aria-label="account of current client"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleMenu}
