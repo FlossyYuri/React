@@ -2,6 +2,7 @@ div.client-card {
   box-shadow: var(--card-1);
   padding: 24px;
   align-items: center;
+  height: 100%;
 }
 div.client-card h6 {
   margin: 8px 0;
@@ -11,7 +12,8 @@ div.client-card h6 {
   opacity: 0.8;
 }
 .client-card .profile-header,
-.client-card .address-data {
+.client-card .address-data,
+.client-card .profile-body .data {
   display: flex;
   flex-wrap: wrap;
 }
@@ -47,7 +49,7 @@ div.client-card .profile-header .client-avatar {
   justify-content: center;
 }
 
-.client-card .profile-header .clientname span {
+.client-card .profile-header .client-name span {
   color: var(--dark-main-color);
   font-size: 1.1rem;
   font-weight: 500;
@@ -77,4 +79,7 @@ div.client-card .address-fields span {
 }
 .client-card .client-actions .edit span.MuiIconButton-label {
   color: var(--main-color);
+}
+.client-card .client-actions button *{
+  pointer-events: none;
 }

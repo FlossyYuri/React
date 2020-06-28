@@ -3,14 +3,14 @@ import { Delete, Edit } from "@material-ui/icons";
 import "./ClientCard.css";
 import { IconButton } from "@material-ui/core";
 
-// Create a custom card only with css and html
+// Create a custom card only with css and html {except the Icons buttons, they a really cute😍}
 export default function ClientView(props) {
   return (
     <div className="client-card">
       <div className="profile-header">
         <div className="client-avatar">{props.client.name.charAt(0)}</div>
         <div className="header-data">
-          <div className="clientname">
+          <div className="client-name">
             <span>{props.client.name}</span>
           </div>
           <div className="bi">
@@ -18,12 +18,26 @@ export default function ClientView(props) {
           </div>
         </div>
         <div className="client-actions">
-          <IconButton aria-label="edit" className="edit">
+          {/* <Tooltip title="Editar"> */}
+          <IconButton
+            index={props.clientIndex}
+            aria-label="edit"
+            className="edit"
+            onClick={props.clickEdit}
+          >
             <Edit fontSize="small" />
           </IconButton>
-          <IconButton aria-label="delete" className="del">
+          {/* </Tooltip> */}
+          {/* <Tooltip title="Apagar"> */}
+          <IconButton
+            uid={props.client.id}
+            aria-label="delete"
+            className="del"
+            onClick={props.clickDel}
+          >
             <Delete fontSize="small" />
           </IconButton>
+          {/* </Tooltip> */}
         </div>
       </div>
       <div className="profile-body">
@@ -46,15 +60,19 @@ export default function ClientView(props) {
         </div>
         <div className="phones">
           <h6>Telefones</h6>
-          {props.client.phones.map((phone, index) => (
-            <span key={index}>{phone}</span>
-          ))}
+          <div className="data">
+            {props.client.phones.map((phone, index) => (
+              <span key={index}>{phone}</span>
+            ))}
+          </div>
         </div>
         <div className="emails">
           <h6>Emails</h6>
-          {props.client.emails.map((email, index) => (
-            <span key={index}>{email}</span>
-          ))}
+          <div className="data">
+            {props.client.emails.map((email, index) => (
+              <span key={index}>{email}</span>
+            ))}
+          </div>
         </div>
       </div>
     </div>

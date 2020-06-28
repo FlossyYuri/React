@@ -28,3 +28,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+a#hidden{
+  position: absolute;
+  display: none;
+}

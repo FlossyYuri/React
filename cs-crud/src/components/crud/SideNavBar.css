@@ -18,8 +18,8 @@
 .side-bar div.tabsGroup {
   width: 100%;
 }
-.side-bar span.PrivateTabIndicator-colorSecondary-3 {
-  background-color: white;
+.side-bar span.MuiTabs-indicator {
+  background-color: var(--light-main-color);
   width: 3px;
   border-radius: 3px;
 }

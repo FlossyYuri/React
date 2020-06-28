@@ -24,8 +24,7 @@ export default (props) => (
       aria-label="Vertical tabs example"
     >
       <Tab label="Visualizar" {...a11yProps(0)} />
-      <Tab label="Cadastrar" {...a11yProps(1)} />
-      <Tab label="Atualizar" {...a11yProps(2)} />
+      {props.user && <Tab label="Cadastrar" {...a11yProps(1)} />}
     </Tabs>
   </div>
 );

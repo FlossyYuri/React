@@ -42,12 +42,12 @@ div.MuiInput-underline::after {
   border-bottom-color: var(--dark-main-color);
 }
 
-h4.MuiTypography-root{
-    color: var(--main-color);
-    font-weight: 500;
+h4.MuiTypography-root {
+  color: var(--main-color);
+  font-weight: 500;
 }
 
-a.btn-login {
+button.btn-login {
   margin-top: 16px;
   border-radius: 40px;
   width: 100%;
@@ -55,4 +55,20 @@ a.btn-login {
     linear-gradient(to right, rgb(0, 0, 70), rgb(28, 181, 224)) repeat scroll 0%
     0%;
   color: white;
+}
+
+div.switch {
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--dark-main-color);
+}
+div.switch .MuiSwitch-colorSecondary.Mui-checked {
+  color: var(--main-color);
+}
+div.switch .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+  background-color: var(--main-color);
 }

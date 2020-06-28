@@ -1,9 +1,11 @@
+import Api from "../../config/index";
 import React, { Component } from "react";
 import { Typography, Button, Grid, TextField } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 import SaveIcon from "@material-ui/icons/Save";
 import "./RegisterClient.css";
+import { withSnackbar } from "notistack";
 
 const client = {
   name: "",
@@ -18,14 +20,14 @@ const client = {
   emails: [""],
 };
 
-// i dint use the spread operator to clone to avoid conflicts of different objects pointing to the same references
+// i dint use the spread operator to clone to avoid conflicts of different objects pointing to the same references😃
 const initState = {
+  clientToEdit: null,
   client: JSON.parse(JSON.stringify(client)),
   helper: JSON.parse(JSON.stringify(client)),
-  data: {},
 };
 
-export default class ClientView extends Component {
+class RegisterClient extends Component {
   state = JSON.parse(JSON.stringify(initState));
   constructor(props) {
     super(props);
@@ -39,6 +41,13 @@ export default class ClientView extends Component {
     this.validate = this.validate.bind(this);
     this.clear = this.clear.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.showError = this.showError.bind(this);
+  }
+  componentWillMount() {
+    if (this.props.clientToEdit !== null) {
+      const clientToEdit = JSON.parse(JSON.stringify(this.props.clientToEdit));
+      this.setState({ clientToEdit, client: clientToEdit });
+    }
   }
   addEmail() {
     if (this.state.client.emails.length < 4) {
@@ -84,7 +93,29 @@ export default class ClientView extends Component {
       event.target.value;
     this.setState({ client });
   }
-  clear() {
+  clear(edit) {
+    if (this.state.clientToEdit) {
+      edit &&
+        this.props.enqueueSnackbar(
+          "Formulário limpo, cadastre um novo cliente",
+          {
+            variant: "info",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          }
+        );
+      this.props.setClientToEdit(null);
+    } else {
+      this.props.enqueueSnackbar("Formulário limpo", {
+        variant: "info",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    }
     this.setState(JSON.parse(JSON.stringify(initState)));
   }
   validate() {
@@ -94,6 +125,7 @@ export default class ClientView extends Component {
     if (
       this.state.client.name.length < 3 ||
       this.state.client.name.length > 100 ||
+      //Regex that filters the name in order to just allow letters,numbers and space
       !/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ0-9 ]+$/.test(
         this.state.client.name
       )
@@ -142,14 +174,77 @@ export default class ClientView extends Component {
     const err = this.validate();
     if (!err) {
       const data = JSON.parse(JSON.stringify(this.state.client));
-      this.setState({ data });
+      Api.saveClient(
+        data,
+        (resp) => {
+          if (resp.data.name === data.name) {
+            const update = !!this.state.clientToEdit;
+            this.clear(true);
+            this.props.enqueueSnackbar(
+              `Cliente ${resp.data.name} ${
+                update ? "atualizado" : "cadastrado"
+              } com sucesso`,
+              {
+                variant: "success",
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "right",
+                },
+              }
+            );
+          }
+        },
+        this.showError
+      );
+    }
+  }
+  showError(e) {
+    // console.log(e);
+    if (e && e.response && e.response.data) {
+      let text;
+      switch (e.response.status) {
+        case 401:
+          text = "Ops, vc não está autenticado.";
+          if (this.props.user) {
+            const link = document.getElementById("hidden");
+            link.href = "";
+            console.log(link)
+            link.click();
+          }
+          break;
+        default:
+          text = e.response.data;
+      }
+      this.props.enqueueSnackbar(text, {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    } else if (typeof e === "string") {
+      this.props.enqueueSnackbar(e, {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    } else {
+      this.props.enqueueSnackbar("Ops... Algo deu errado", {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
     }
   }
   render() {
     return (
       <div className="register-client">
         <Typography className="screen-title" variant="h5" gutterBottom>
-          Cadastrar Cliente
+          {this.state.clientToEdit ? "Atualizar" : "Cadastrar"} Cliente
         </Typography>
         <form>
           <Grid container spacing={1}>
@@ -183,7 +278,7 @@ export default class ClientView extends Component {
                     value={this.state.client.address.zipCode}
                     onChange={this.updateAddress}
                     name="zipCode"
-                    placeholder="ZIPCODE"
+                    label="ZIPCODE"
                     helperText={this.state.helper.address.zipCode}
                   />
                 </Grid>
@@ -192,7 +287,7 @@ export default class ClientView extends Component {
                     value={this.state.client.address.publicPlace}
                     onChange={this.updateAddress}
                     name="publicPlace"
-                    placeholder="Logradouro"
+                    label="Logradouro"
                     helperText={this.state.helper.address.publicPlace}
                   />
                 </Grid>
@@ -299,7 +394,6 @@ export default class ClientView extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <span>{JSON.stringify(this.state.data)}</span>
         </form>
         <div className="actions-bar">
           <Button
@@ -325,3 +419,4 @@ export default class ClientView extends Component {
     );
   }
 }
+export default withSnackbar(RegisterClient);

@@ -1,29 +1,40 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3000";
+const baseUrl = "http://localhost:3002";
 
-const getClients = () => {
-  return axios(`${baseUrl}/clients`)
-    .then((resp) => resp.data)
-    .catch((_) => null);
+// const getUser = () => {
+//   return axios.defaults.headers.common["Authorization"];
+// };
+const getClients = (callBack, showError) => {
+  axios(`${baseUrl}/clients`).then(callBack).catch(showError);
 };
-const getClient = (id) => {
-  axios(`${baseUrl}/client/${id}`).then((resp) => resp.data);
+const getClient = (id, callBack, showError) => {
+  axios(`${baseUrl}/client/${id}`).then(callBack).catch(showError);
 };
-const deleteClient = (id) => {
-  axios
-    .delete(`${baseUrl}/client/${id}`)
-    .then((resp) => resp && 1)
-    .catch((_) => null);
+const deleteClient = (id, callBack, showError) => {
+  axios.delete(`${baseUrl}/client/${id}`).then(callBack).catch(showError);
 };
-const saveClient = (client) => {
+const saveClient = (client, callBack, showError) => {
   const method = client.id ? "put" : "post";
   const url = client.id
     ? `${baseUrl}/client/${client.id}`
     : `${baseUrl}/clients`;
+  delete client.id;
+  axios[method](url, client).then(callBack).catch(showError);
+};
+const signIn = (user, callBack, showError) => {
+  axios.post(`${baseUrl}/signin`, user).then(callBack).catch(showError);
+};
+const setUserToken = (user) => {
+  if (user.token)
+    axios.defaults.headers.common["Authorization"] = `bearer ${user.token}`;
+  else delete axios.defaults.headers.common["Authorization"];
+};
 
-  axios[method](url, client)
-    .then((resp) => {
-      return resp.data;
-    })
-    .catch((_) => null);
+export default {
+  getClient,
+  getClients,
+  saveClient,
+  deleteClient,
+  signIn,
+  setUserToken,
 };
