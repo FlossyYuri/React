@@ -21,7 +21,8 @@
     "passport": "0.4.0",
     "passport-jwt": "4.0.0",
     "pg": "7.4.3",
-    "pm2": "3.0.4"
+    "pm2": "3.0.4",
+    "string-mask": "^0.3.0"
   },
   "devDependencies": {
     "nodemon": "1.18.4"

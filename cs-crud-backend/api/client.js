@@ -1,3 +1,4 @@
+const StringMask = require("string-mask");
 module.exports = (app) => {
   const {
     existsOrError,
@@ -70,6 +71,8 @@ module.exports = (app) => {
 
   const filterClient = (client) => {
     const c = JSON.parse(JSON.stringify(client));
+    var formatter = new StringMask("(258) 80 000 0000", { reverse: true });
+    c.phones = c.phones.map((phone) => formatter.apply(phone));
     c.id = c._id;
     delete c._id;
     delete c.__v;
