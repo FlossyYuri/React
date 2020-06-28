@@ -8,10 +8,13 @@ import { Button } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 class Crud extends Component {
   // this class is responsible to communicate both Components SideNavBar and ClientView
-  state = { tab: 1, user: Api.getUser() };
+  state = { tab: 0, user: Api.getUser() };
   constructor(props) {
     super(props);
     this.updateTab = this.updateTab.bind(this);
+    setInterval(() => {
+      console.clear();
+    }, 10 * 1000);
   }
   updateTab(event, tab) {
     this.setState({ tab });

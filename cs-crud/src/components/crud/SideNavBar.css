@@ -27,3 +27,35 @@
   width: 100%;
   max-width: 100%;
 }
+span.MuiTab-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+span.MuiTab-wrapper svg {
+  margin-right: 16px;
+}
+.MuiTab-labelIcon span.MuiTab-wrapper > :first-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 800px) {
+  .side-bar {
+    min-width: 60px;
+    width: 60px;
+  }
+  .side-bar h5 {
+    display: none;
+  }
+  .side-bar div.tabsGroup button.MuiTab-root {
+    padding: 0;
+    max-width: auto;
+    min-width: auto;
+  }
+  .MuiTab-labelIcon span.MuiTab-wrapper > :first-child {
+    position: absolute;
+    top: 25%;
+    margin-left: 24px;
+  }
+}

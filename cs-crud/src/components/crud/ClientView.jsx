@@ -1,22 +1,16 @@
+import Api from "../../config/index";
 import React, { Component } from "react";
-import { Typography, Snackbar, Slide, TextField } from "@material-ui/core";
+import { Typography, TextField } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
-import MuiAlert from "@material-ui/lab/Alert";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-// import MenuIcon from "@material-ui/icons/Menu";
-// import SearchIcon from "@material-ui/icons/Search";
-// import MenuItem from "@material-ui/core/MenuItem";
-// import Menu from "@material-ui/core/Menu";
+import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 import ViewClient from "./ViewClient";
 import RegisterClient from "./RegisterClient";
 import "./ClientView.css";
-
-function SlideTransition(props) {
-  return <Slide {...props} direction="down" />;
-}
+import { withSnackbar } from "notistack";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -34,31 +28,29 @@ function TabPanel(props) {
   );
 }
 
-export default class ClientView extends Component {
+class ClientView extends Component {
   state = {
     clientToEdit: null,
-    snackBar: {
-      open: false,
-      text: "",
-      severity: "success",
-    },
-    // anchorEl: null,
-    // open: null,
+    search: "",
   };
   constructor(props) {
     super(props);
     this.setClientToEdit = this.setClientToEdit.bind(this);
     this.updateSnackbar = this.updateSnackbar.bind(this);
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
-    // this.setAnchorEl = this.setAnchorEl.bind(this)
-    // this.handleMenu = this.handleMenu.bind(this)
-    // this.handleClose = this.handleClose.bind(this)
+    this.updateSearch = this.updateSearch.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
+    this.logout = this.logout.bind(this);
   }
   handleSnackBarClose(event, reason) {
     if (reason === "clickaway") {
       return;
     }
     this.updateSnackbar(false);
+  }
+  logout() {
+    Api.logout();
+    window.location.href = window.location.origin;
   }
   updateSnackbar(open, severity, text) {
     const snackBar = { ...this.state.snackBar };
@@ -67,18 +59,16 @@ export default class ClientView extends Component {
     text && (snackBar.text = text);
     this.setState({ snackBar });
   }
+  updateSearch(event) {
+    const search = event.target.value;
+    this.setState({ search });
+  }
 
-  // setAnchorEl(anchorEl) {
-  //   this.setState({ anchorEl });
-  // }
-  // handleMenu = (event) => {
-  //   console.log(event.target)
-  //   this.setState({ anchorEl: event.currentTarget });
-  // };
+  clearSearch() {
+    const search = "";
+    this.setState({ search });
+  }
 
-  // handleClose = () => {
-  //   this.setAnchorEl(null);
-  // };
   setClientToEdit(clientToEdit) {
     this.setState({ clientToEdit });
   }
@@ -93,34 +83,38 @@ export default class ClientView extends Component {
                 aria-label="account of current client"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                // onClick={this.handleMenu}
                 color="inherit"
               >
                 <AccountCircle />
               </IconButton>
-              {/* <Menu
-                id="menu-appbar"
-                anchorEl={this.state.anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={this.state.open}
-                onClose={this.state.handleClose}
-              >
-                <MenuItem onClick={this.state.handleClose}>Logout</MenuItem>
-              </Menu> */}
-              <Typography variant="h6">{this.props.user.username}</Typography>
+              <Typography variant="h6">
+                {this.props.user && this.props.user.username}
+              </Typography>
             </div>
-            <TextField className="pesquisa" placeholder={"Pesquisar"} />
-            <IconButton edge="start" className="btn-close" aria-label="menu">
-              <CloseIcon />
-            </IconButton>
+            {this.props.tab === 0 && (
+              <div className="search-tool">
+                <TextField
+                  value={this.state.search}
+                  className="pesquisa"
+                  placeholder={"Pesquisar por nome"}
+                  onChange={this.updateSearch}
+                />
+                <IconButton aria-label="search" onClick={this.clearSearch}>
+                  <DeleteSweepIcon />
+                </IconButton>
+              </div>
+            )}
+            <div className="logout">
+              <span>LOGOUT</span>
+              <IconButton
+                edge="start"
+                className="btn-close"
+                aria-label="menu"
+                onClick={this.logout}
+              >
+                <CloseIcon />
+              </IconButton>
+            </div>
           </Toolbar>
         </AppBar>
 
@@ -130,7 +124,7 @@ export default class ClientView extends Component {
             updateSnackbar={this.updateSnackbar}
             updateTab={this.props.updateTab}
             setClientToEdit={this.setClientToEdit}
-            clientToEdit={this.state.clientToEdit}
+            {...this.state}
           />
         </TabPanel>
         <TabPanel className="tab" value={this.props.tab} index={1}>
@@ -141,24 +135,8 @@ export default class ClientView extends Component {
             clientToEdit={this.state.clientToEdit}
           />
         </TabPanel>
-
-        <Snackbar
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          TransitionComponent={SlideTransition}
-          open={this.state.snackBar.open}
-          autoHideDuration={5000}
-          onClose={this.handleSnackBarClose}
-        >
-          <MuiAlert
-            onClose={this.handleSnackBarClose}
-            severity={this.state.snackBar.severity}
-            elevation={6}
-            variant="filled"
-          >
-            {this.state.snackBar.text}
-          </MuiAlert>
-        </Snackbar>
       </div>
     );
   }
 }
+export default withSnackbar(ClientView);

@@ -16,7 +16,7 @@ class ViewClient extends Component {
     this.editClient = this.editClient.bind(this);
     this.showError = this.showError.bind(this);
   }
-  componentDidMount() {
+  componentWillMount() {
     this.getClients();
   }
   showError(e) {
@@ -95,20 +95,26 @@ class ViewClient extends Component {
     return (
       <div className="view-client">
         <Typography className="screen-title" variant="h5" gutterBottom>
-          Visualizar Cliente
+          Visualizar Clientes
         </Typography>
         <Grid className="clients-panel" container spacing={1}>
-          {this.state.clients.map((client, index) => (
-            <Grid key={index} item sm={12} lg={6} xl={4}>
-              <ClientCard
-                clickEdit={this.editClient}
-                clickDel={this.deleteClient}
-                clientIndex={index}
-                client={this.state.clients[index]}
-                user={this.props.user}
-              />
-            </Grid>
-          ))}
+          {this.state.clients
+            .filter((client) =>
+              client.name
+                .toLowerCase()
+                .includes(this.props.search.toLowerCase())
+            )
+            .map((client, index) => (
+              <Grid key={index} item sm={12} lg={6} xl={4}>
+                <ClientCard
+                  clickEdit={this.editClient}
+                  clickDel={this.deleteClient}
+                  clientIndex={index}
+                  client={this.state.clients[index]}
+                  user={this.props.user}
+                />
+              </Grid>
+            ))}
         </Grid>
       </div>
     );

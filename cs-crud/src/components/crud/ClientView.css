@@ -28,3 +28,19 @@ div.MuiTextField-root.pesquisa input {
   color: white;
   background-color: var(--dark-main-color);
 }
+div.search-tool{
+  display: flex;
+  align-items: center;
+}
+div.search-tool button.MuiIconButton-root {
+  color: white;
+  margin-left: 10px;
+}
+div.logout{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+div.logout span{
+  margin-right: 8px;
+}

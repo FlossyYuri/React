@@ -3,8 +3,13 @@ const baseUrl = "http://localhost:3002";
 
 const getUser = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  axios.defaults.headers.common["Authorization"] = `bearer ${user.token}`;
+  if (user)
+    axios.defaults.headers.common["Authorization"] = `bearer ${user.token}`;
   return user;
+};
+const logout = () => {
+  delete axios.defaults.headers.common["Authorization"];
+  localStorage.setItem("user", null);
 };
 const getClients = (callBack, showError) => {
   axios(`${baseUrl}/clients`).then(callBack).catch(showError);
@@ -41,4 +46,5 @@ export default {
   signIn,
   getUser,
   setUserToken,
+  logout,
 };

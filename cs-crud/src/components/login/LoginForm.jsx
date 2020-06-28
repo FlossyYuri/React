@@ -36,9 +36,7 @@ const LoginForm = (props) => {
               horizontal: "right",
             },
           });
-          const link = document.getElementById("hidden");
-          link.href = "/crud";
-          link.click();
+          document.location.href = document.location.origin + "/crud";
         }
       },
       showError

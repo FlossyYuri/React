@@ -1,5 +1,7 @@
 import React from "react";
 import { Typography, Tabs, Tab } from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import "./SideNavBar.css";
 
 function a11yProps(index) {
@@ -23,8 +25,10 @@ export default (props) => (
       onChange={props.updateTab}
       aria-label="Vertical tabs example"
     >
-      <Tab label="Visualizar" {...a11yProps(0)} />
-      {props.user.admin && <Tab label="Cadastrar" {...a11yProps(1)} />}
+      <Tab icon={<VisibilityIcon />} label="Visualizar" {...a11yProps(0)} />
+      {props.user && props.user.admin && (
+        <Tab icon={<AddCircleIcon />} label="Cadastrar" {...a11yProps(1)} />
+      )}
     </Tabs>
   </div>
 );
