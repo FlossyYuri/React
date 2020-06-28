@@ -5,6 +5,7 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 import SaveIcon from "@material-ui/icons/Save";
 import "./RegisterClient.css";
+import InputMask from "react-input-mask";
 import { withSnackbar } from "notistack";
 
 const client = {
@@ -155,8 +156,9 @@ class RegisterClient extends Component {
       helper.address.city = "Campo obrigatório";
     }
     this.state.client.phones.forEach((phone, index) => {
-      if (phone.length < 9) {
+      if (phone.length !== 17) {
         hasError = true;
+        console.log(phone);
         helper.phones[index] = "Introduza corretamente o telefone";
       }
     });
@@ -174,6 +176,10 @@ class RegisterClient extends Component {
     const err = this.validate();
     if (!err) {
       const data = JSON.parse(JSON.stringify(this.state.client));
+      data.phones = data.phones.map((p) => {
+        return p.substring(6).replaceAll(" ", "");
+      });
+      console.log(data.phones)
       Api.saveClient(
         data,
         (resp) => {
@@ -208,7 +214,7 @@ class RegisterClient extends Component {
           if (this.props.user) {
             const link = document.getElementById("hidden");
             link.href = "";
-            console.log(link)
+            console.log(link);
             link.click();
           }
           break;
@@ -296,7 +302,7 @@ class RegisterClient extends Component {
                     value={this.state.client.address.neighborHood}
                     onChange={this.updateAddress}
                     name="neighborHood"
-                    placeholder="Bairro"
+                    label="Bairro"
                     helperText={this.state.helper.address.neighborHood}
                   />
                 </Grid>
@@ -305,7 +311,7 @@ class RegisterClient extends Component {
                     value={this.state.client.address.city}
                     onChange={this.updateAddress}
                     name="city"
-                    placeholder="Cidade"
+                    label="Cidade"
                     helperText={this.state.helper.address.city}
                   />
                 </Grid>
@@ -340,14 +346,22 @@ class RegisterClient extends Component {
                 </Grid>
                 {this.state.client.phones.map((phone, index) => (
                   <Grid key={index + "Phone"} item sm={12} md={4} lg={3}>
-                    <TextField
+                    <InputMask
+                      mask="(258) 89 999 9999"
                       value={phone}
+                      disabled={false}
                       onChange={this.updateArray}
-                      name="phones"
-                      placeholder="Phone"
-                      helperText={this.state.helper.phones[index]}
-                      inputProps={{ index }}
-                    />
+                      maskChar=" "
+                    >
+                      {() => (
+                        <TextField
+                          name="phones"
+                          helperText={this.state.helper.phones[index]}
+                          type="text"
+                          inputProps={{ index }}
+                        />
+                      )}
+                    </InputMask>
                   </Grid>
                 ))}
               </Grid>

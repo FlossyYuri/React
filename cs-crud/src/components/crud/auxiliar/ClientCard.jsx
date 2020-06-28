@@ -17,28 +17,26 @@ export default function ClientView(props) {
             <span>BI: {props.client.bi}</span>
           </div>
         </div>
-        <div className="client-actions">
-          {/* <Tooltip title="Editar"> */}
-          <IconButton
-            index={props.clientIndex}
-            aria-label="edit"
-            className="edit"
-            onClick={props.clickEdit}
-          >
-            <Edit fontSize="small" />
-          </IconButton>
-          {/* </Tooltip> */}
-          {/* <Tooltip title="Apagar"> */}
-          <IconButton
-            uid={props.client.id}
-            aria-label="delete"
-            className="del"
-            onClick={props.clickDel}
-          >
-            <Delete fontSize="small" />
-          </IconButton>
-          {/* </Tooltip> */}
-        </div>
+        {props.user.admin && (
+          <div className="client-actions">
+            <IconButton
+              index={props.clientIndex}
+              aria-label="edit"
+              className="edit"
+              onClick={props.clickEdit}
+            >
+              <Edit fontSize="small" />
+            </IconButton>
+            <IconButton
+              uid={props.client.id}
+              aria-label="delete"
+              className="del"
+              onClick={props.clickDel}
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </div>
+        )}
       </div>
       <div className="profile-body">
         <div className="address">

@@ -15,6 +15,16 @@ div.client-profile {
 .client-view div.tab {
   flex: 1;
 }
-.client-view .btn-close{
-    color: #ffebee;
+.client-view .btn-close {
+  color: #ffebee;
+}
+div.MuiTextField-root.pesquisa {
+  width: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+div.MuiTextField-root.pesquisa input {
+  padding: 8px 16px;
+  color: white;
+  background-color: var(--dark-main-color);
 }

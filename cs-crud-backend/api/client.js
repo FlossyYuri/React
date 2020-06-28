@@ -8,7 +8,7 @@ module.exports = (app) => {
     validEmails,
   } = app.api.validation;
   const Client = app.mongoose.model("Client", {
-    username: String,
+    name: String,
     bi: String,
     address: Object,
     phones: Array,
@@ -16,7 +16,6 @@ module.exports = (app) => {
   });
   const save = async (req, res) => {
     const client = { ...req.body };
-    if (req.params.id) client.id = req.params.id;
 
     try {
       existsOrError(client.name, "Introduza o Nome");
@@ -38,20 +37,18 @@ module.exports = (app) => {
         "Telefone(s) invalido(s), preencha devidamente todos campos"
       );
       validEmails(client.emails, "Email(s) invalido(s), preencha devidamente");
-      const clientCollection = new Client(client);
-      clientCollection.save().then((saved) => res.json(saved));
-      // client.findOne({}, {}, { sort: { createdAt: -1 } })
-      //   .then((client) => {
-      //     const defaultclient = {
-      //       username: 0,
-      //       bi: 0,
-      //       address: {},
-      //       phones: [],
-      //       emails: [],
-      //     };
-      //     res.json(client || defaultclient);
-      //   })
-      //   .catch((error) => res.status(400).send(error));
+      if (req.params.id) {
+        //update
+        Client.findOneAndUpdate({ _id: req.params.id }, { ...client })
+          .then((saved) => res.json(filterClient(client)))
+          .catch((error) => res.status(400).send(error));
+      } else {
+        const clientCollection = new Client(client);
+        clientCollection
+          .save()
+          .then((saved) => res.json(filterClient(saved)))
+          .catch((error) => res.status(400).send(error));
+      }
     } catch (msg) {
       return res.status(500).send(msg);
     }
@@ -72,8 +69,10 @@ module.exports = (app) => {
   };
 
   const filterClient = (client) => {
-    const { _id, name, bi, address, phones, emails } = client;
-    const c = { id: _id, name, bi, address, phones, emails };
+    const c = JSON.parse(JSON.stringify(client));
+    c.id = c._id;
+    delete c._id;
+    delete c.__v;
     return c;
   };
   const filterClients = (clients) => {
@@ -91,7 +90,6 @@ module.exports = (app) => {
   const getById = (req, res) => {
     Client.findOne({ _id: req.params.id })
       .then((client) => {
-        console.log(client);
         if (client) res.json(filterClient(client));
         else res.json({});
       })

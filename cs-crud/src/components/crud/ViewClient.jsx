@@ -31,7 +31,7 @@ class ViewClient extends Component {
             link.href = "/";
             setTimeout(() => {
               document.getElementById("hidden").click();
-            },10000);
+            }, 10000);
           }
           break;
         default:
@@ -105,6 +105,7 @@ class ViewClient extends Component {
                 clickDel={this.deleteClient}
                 clientIndex={index}
                 client={this.state.clients[index]}
+                user={this.props.user}
               />
             </Grid>
           ))}

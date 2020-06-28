@@ -5,7 +5,11 @@ module.exports = (app) => {
     if (typeof value == "string" && !value.trim()) throw msg;
   }
   function validName(name, msg) {
-    if (name.length < 3 || name.length > 100 || !/^[a-zA-Z\-]+$/.test(name))
+    if (
+      name.length < 3 ||
+      name.length > 100 ||
+      !/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ0-9 ]+$/.test(name)
+    )
       throw msg;
   }
   function validBI(bi, msg) {
@@ -24,7 +28,7 @@ module.exports = (app) => {
     if (phones.length === 0) throw msg;
     else
       phones.forEach((phone) => {
-        if (phone.length < 9) throw msg;
+        if (phone.length !== 9) throw msg;
       });
   }
   function validEmails(emails, msg) {

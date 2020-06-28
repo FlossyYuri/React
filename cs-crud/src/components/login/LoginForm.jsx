@@ -2,7 +2,6 @@ import Api from "../../config/index";
 import React from "react";
 import { withSnackbar, useSnackbar } from "notistack";
 import "./LoginForm.css";
-// import { Link as RouterLink } from "react-router-dom";
 import {
   Typography,
   TextField,
@@ -13,14 +12,15 @@ import {
 import AccountCircle from "@material-ui/icons/AccountCircle";
 const userOBJ = { username: "", password: "", admin: false };
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [user] = React.useState(userOBJ);
   const [helper] = React.useState(JSON.parse(JSON.stringify(userOBJ)));
   const { enqueueSnackbar } = useSnackbar();
   const updateField = (event) => {
-    let val = event.target.checked || event.target.value;
-    if (val === "") val = false;
-    user[event.target.name] = val;
+    user[event.target.name] = event.target.value;
+  };
+  const updateAdmin = (event) => {
+    user.admin = event.target.checked;
   };
   const onSubmit = () => {
     window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
@@ -45,6 +45,7 @@ const LoginForm = () => {
     );
   };
   const showError = (e) => {
+    console.log(e.response.data);
     if (e && e.response && e.response.data) {
       enqueueSnackbar(e.response.data, {
         variant: "error",
@@ -105,7 +106,7 @@ const LoginForm = () => {
       />
       <div className="switch">
         <span>Admin</span>
-        <Switch name="admin" onChange={updateField} />
+        <Switch name="admin" onChange={updateAdmin} />
       </div>
       <Button
         variant="contained"

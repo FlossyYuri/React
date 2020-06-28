@@ -1,3 +1,4 @@
+import Api from "../../config/index";
 import React, { Component } from "react";
 import "./Crud.css";
 import SideNavBar from "./SideNavBar";
@@ -7,7 +8,7 @@ import { Button } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 class Crud extends Component {
   // this class is responsible to communicate both Components SideNavBar and ClientView
-  state = { tab: 0, user: true };
+  state = { tab: 1, user: Api.getUser() };
   constructor(props) {
     super(props);
     this.updateTab = this.updateTab.bind(this);
@@ -24,7 +25,7 @@ class Crud extends Component {
       <div className="crud-window">
         <SideNavBar {...this.state} updateTab={this.updateTab} />
         <ClientView {...this.state} updateTab={this.updateTab} />
-    <Button id="hidden" component={RouterLink} to="/crud" />
+        <Button id="hidden" component={RouterLink} to="/crud" />
       </div>
     );
   }

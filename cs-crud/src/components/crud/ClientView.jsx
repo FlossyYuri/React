@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Typography, Snackbar, Slide } from "@material-ui/core";
+import { Typography, Snackbar, Slide, TextField } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+// import MenuIcon from "@material-ui/icons/Menu";
+// import SearchIcon from "@material-ui/icons/Search";
 // import MenuItem from "@material-ui/core/MenuItem";
 // import Menu from "@material-ui/core/Menu";
 import ViewClient from "./ViewClient";
@@ -113,15 +115,16 @@ export default class ClientView extends Component {
               >
                 <MenuItem onClick={this.state.handleClose}>Logout</MenuItem>
               </Menu> */}
-              <Typography variant="h6">John Jones</Typography>
+              <Typography variant="h6">{this.props.user.username}</Typography>
             </div>
+            <TextField className="pesquisa" placeholder={"Pesquisar"} />
             <IconButton edge="start" className="btn-close" aria-label="menu">
               <CloseIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
 
-        <TabPanel className="tab" value={this.props.tab} index={0}>
+        <TabPanel className="tab scroll" value={this.props.tab} index={0}>
           <ViewClient
             {...this.props}
             updateSnackbar={this.updateSnackbar}
